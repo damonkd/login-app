@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const path = require('path');
 const app = express();
+const User = require('./models/User.js');
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/ping', function (req, res) {
@@ -18,6 +19,20 @@ app.get('/api/home', function(req, res) {
   });
   app.get('/api/secret', function(req, res) {
     res.send('The password is potato');
+  });
+
+  // POST route to register a user
+app.post('/api/register', function(req, res) {
+    const { email, password } = req.body;
+    const user = new User({ email, password });
+    user.save(function(err) {
+      if (err) {
+        res.status(500)
+          .send("Error registering new user please try again.");
+      } else {
+        res.status(200).send("Welcome to the club!");
+      }
+    });
   });
 
 app.listen(process.env.PORT || 8080);
