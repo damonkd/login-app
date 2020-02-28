@@ -35,7 +35,7 @@ app.post('/api/register', function(req, res) {
     });
   });
 
-app.listen(process.env.PORT || 8080);
+
 
 const mongoose = require('mongoose');
 const mongo_uri = 'mongodb://localhost/react-auth';
